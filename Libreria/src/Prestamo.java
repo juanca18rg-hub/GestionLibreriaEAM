@@ -37,10 +37,12 @@ public class Prestamo {
     }
 
     public void prestarlibro(){
-        if (libro.getEstado()=="Disponible"){
+        if (libro.getEstado().equalsIgnoreCase("Disponible")){
             libro.cambiarEstado("Prestado");
             setFechitaDeprestamo(LocalDateTime.now());
-            cliente.setPrestamosActivos(+1);
+            cliente.setPrestamosActivos(cliente.getPrestamosActivos()+1);
+            System.out.println("Se presto el libro"+libro.getTitulo()+"a"+cliente.getNombre());
         }
+        System.out.println("El libro"+libro.getTitulo()+"Esta prestado");
     }
 }
