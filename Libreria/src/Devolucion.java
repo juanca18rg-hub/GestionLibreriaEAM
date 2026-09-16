@@ -34,11 +34,13 @@ public class Devolucion {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-    public void prestarlibro(){
-        if (libro.getEstado()=="Prestado"){
+    public void Devolverlibro(){
+        if (libro.getEstado().equals("Prestado")){
             libro.cambiarEstado("Disponible");
+            System.out.println("El libro"+libro.getTitulo()+"Esta disponible");
             setFechaDevolucion(LocalDateTime.now());
-            cliente.setPrestamosActivos(-1);
+            cliente.setPrestamosActivos(cliente.getPrestamosActivos()-1);
         }
+
     }
 }
