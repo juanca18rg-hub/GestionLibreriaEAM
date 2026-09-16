@@ -42,4 +42,11 @@ public class Cliente {
     public void setPrestamosActivos(int prestamosActivos) {
         this.prestamosActivos = prestamosActivos;
     }
+    public void mostrarInformacion() {
+
+        System.out.println("Documento: " + id);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Direccion: " + direccion);
+        System.out.println("Prestamos activos: " + prestamosActivos);
+    }
 }

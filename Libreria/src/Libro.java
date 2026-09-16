@@ -104,4 +104,7 @@ public class Libro {
             libro.mostrarInformacion();
         }
     }
+    public static ArrayList<Libro> getLibros() {
+        return libros;
+    }
 }
