@@ -1,52 +1,39 @@
 public class Cliente {
-    private String id;
-    private String direccion;
-    private String nombre;
-    private int prestamosActivos;
+	private String id;
+	private String nombre;
+	private String telefono;
+	private String direccion;
+	private boolean tieneLibroPrestado;
 
-    public Cliente(String id, String direccion, String nombre, int tieneLibroPrestado) {
-        this.id = id;
-        this.direccion = direccion;
-        this.nombre = nombre;
-        this.prestamosActivos = tieneLibroPrestado;
-    }
+	public Cliente(String id, String nombre, String telefono, String direccion) {
+		this.id = id;
+		this.nombre = nombre;
+		this.telefono = telefono;
+		this.direccion = direccion;
+		this.tieneLibroPrestado = false;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getDireccion() {
-        return direccion;
-    }
+	public String getTelefono() {
+		return telefono;
+	}
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
+	public String getDireccion() {
+		return direccion;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public boolean tieneLibroPrestado() {
+		return tieneLibroPrestado;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getPrestamosActivos() {
-        return prestamosActivos;
-    }
-
-    public void setPrestamosActivos(int prestamosActivos) {
-        this.prestamosActivos = prestamosActivos;
-    }
-    public void mostrarInformacion() {
-
-        System.out.println("Documento: " + id);
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Direccion: " + direccion);
-        System.out.println("Prestamos activos: " + prestamosActivos);
-    }
+	public void setTieneLibroPrestado(boolean tieneLibroPrestado) {
+		this.tieneLibroPrestado = tieneLibroPrestado;
+	}
 }
