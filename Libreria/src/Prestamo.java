@@ -1,13 +1,13 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Prestamo {
 
     private LocalDateTime fechitaDeprestamo;
-   private Cliente cliente;
-   private  Libro libro;
+    private Cliente cliente;
+    private Libro libro;
 
     public Prestamo(Cliente cliente, Libro libro) {
+
         this.cliente = cliente;
         this.libro = libro;
     }
@@ -36,13 +36,38 @@ public class Prestamo {
         this.fechitaDeprestamo = fechitaDeprestamo;
     }
 
-    public void prestarlibro(){
-        if (libro.getEstado().equalsIgnoreCase("Disponible")){
+    public void prestarlibro() {
+
+        if (libro.getEstado().equalsIgnoreCase("Disponible")
+                && !cliente.tieneLibroPrestado()) {
+
             libro.cambiarEstado("Prestado");
+
+            cliente.setTieneLibroPrestado(true);
+
             setFechitaDeprestamo(LocalDateTime.now());
-            cliente.setPrestamosActivos(cliente.getPrestamosActivos()+1);
-            System.out.println("Se presto el libro"+libro.getTitulo()+"a"+cliente.getNombre());
+
+            System.out.println(
+                    "Se presto el libro "
+                            + libro.getTitulo()
+                            + " a "
+                            + cliente.getNombre()
+            );
+
+        } else {
+
+            if (!libro.getEstado().equalsIgnoreCase("Disponible")) {
+
+                System.out.println(
+                        "El libro ya esta prestado."
+                );
+
+            } else {
+
+                System.out.println(
+                        "El cliente ya tiene un libro prestado."
+                );
+            }
         }
-        System.out.println("El libro"+libro.getTitulo()+"Esta prestado");
     }
 }

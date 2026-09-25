@@ -17,7 +17,7 @@ public class Libreria {
 
             System.out.println();
             System.out.println("======================================");
-            System.out.println("        BIBLIOTECA LIBROSYMAS");
+            System.out.println("         BIBLIOTECA LIBROSYMAS");
             System.out.println("======================================");
             System.out.println("1. Registrar libro");
             System.out.println("2. Mostrar inventario de libros");
@@ -35,9 +35,7 @@ public class Libreria {
 
             switch (opcion) {
 
-                // =========================================
-                // REGISTRAR LIBRO
-                // =========================================
+                // 1. REGISTRAR LIBRO
                 case 1:
 
                     System.out.println();
@@ -107,32 +105,23 @@ public class Libreria {
 
                     break;
 
-                // =========================================
-                // MOSTRAR LIBROS
-                // =========================================
+                // 2. MOSTRAR LIBROS
                 case 2:
 
                     System.out.println();
+
                     Libro.listarLibros();
 
                     break;
 
-                // =========================================
-                // REGISTRAR CLIENTE
-                // =========================================
+                // 3. REGISTRAR CLIENTE
                 case 3:
 
                     System.out.println();
                     System.out.println("===== REGISTRAR CLIENTE =====");
 
-                    System.out.print("Documento de identidad: ");
+                    System.out.print("ID del cliente: ");
                     String idCliente = teclado.nextLine();
-
-                    System.out.print("Nombre completo: ");
-                    String nombreCliente = teclado.nextLine();
-
-                    System.out.print("Direccion: ");
-                    String direccionCliente = teclado.nextLine();
 
                     boolean clienteExiste = false;
 
@@ -148,30 +137,37 @@ public class Libreria {
                     if (clienteExiste) {
 
                         System.out.println(
-                                "Ya existe un cliente con ese documento."
+                                "Ya existe un cliente con ese ID."
                         );
 
-                    } else {
-
-                        Cliente nuevoCliente = new Cliente(
-                                idCliente,
-                                direccionCliente,
-                                nombreCliente,
-                                0
-                        );
-
-                        clientes.add(nuevoCliente);
-
-                        System.out.println(
-                                "Cliente registrado correctamente."
-                        );
+                        break;
                     }
+
+                    System.out.print("Nombre: ");
+                    String nombreCliente = teclado.nextLine();
+
+                    System.out.print("Telefono: ");
+                    String telefonoCliente = teclado.nextLine();
+
+                    System.out.print("Direccion: ");
+                    String direccionCliente = teclado.nextLine();
+
+                    Cliente nuevoCliente = new Cliente(
+                            idCliente,
+                            nombreCliente,
+                            telefonoCliente,
+                            direccionCliente
+                    );
+
+                    clientes.add(nuevoCliente);
+
+                    System.out.println(
+                            "Cliente registrado correctamente."
+                    );
 
                     break;
 
-                // =========================================
-                // MOSTRAR CLIENTES
-                // =========================================
+                // 4. MOSTRAR CLIENTES
                 case 4:
 
                     System.out.println();
@@ -197,15 +193,13 @@ public class Libreria {
 
                     break;
 
-                // =========================================
-                // PRESTAR LIBRO
-                // =========================================
+                // 5. PRESTAR LIBRO
                 case 5:
 
                     System.out.println();
                     System.out.println("===== PRESTAR LIBRO =====");
 
-                    System.out.print("Documento del cliente: ");
+                    System.out.print("ID del cliente: ");
                     String idPrestamo = teclado.nextLine();
 
                     Cliente clientePrestamo = null;
@@ -228,10 +222,7 @@ public class Libreria {
                         break;
                     }
 
-                    System.out.print(
-                            "Identificador del libro: "
-                    );
-
+                    System.out.print("ID del libro: ");
                     String idLibroPrestamo = teclado.nextLine();
 
                     Libro libroPrestamo = null;
@@ -260,31 +251,30 @@ public class Libreria {
                             libroPrestamo
                     );
 
-                    // Verificamos antes de hacer el préstamo
-                    if (libroPrestamo.getEstado()
-                            .equals("Disponible")
-                            && clientePrestamo.getPrestamosActivos() == 0) {
+                    boolean libroDisponible =
+                            libroPrestamo.getEstado()
+                                    .equalsIgnoreCase("Disponible");
 
-                        nuevoPrestamo.prestarlibro();
+                    boolean clienteLibre =
+                            !clientePrestamo.tieneLibroPrestado();
+
+                    nuevoPrestamo.prestarlibro();
+
+                    // Solo guardamos el préstamo si realmente se hizo
+                    if (libroDisponible && clienteLibre) {
 
                         prestamos.add(nuevoPrestamo);
-
-                    } else {
-
-                        nuevoPrestamo.prestarlibro();
                     }
 
                     break;
 
-                // =========================================
-                // DEVOLVER LIBRO
-                // =========================================
+                // 6. DEVOLVER LIBRO
                 case 6:
 
                     System.out.println();
                     System.out.println("===== DEVOLVER LIBRO =====");
 
-                    System.out.print("Documento del cliente: ");
+                    System.out.print("ID del cliente: ");
                     String idDevolucion = teclado.nextLine();
 
                     Cliente clienteDevolucion = null;
@@ -307,10 +297,7 @@ public class Libreria {
                         break;
                     }
 
-                    System.out.print(
-                            "Identificador del libro: "
-                    );
-
+                    System.out.print("ID del libro: ");
                     String idLibroDevolucion = teclado.nextLine();
 
                     Prestamo prestamoEncontrado = null;
@@ -345,7 +332,7 @@ public class Libreria {
                                     prestamoEncontrado.getLibro()
                             );
 
-                    nuevaDevolucion.Devolverlibro();
+                    nuevaDevolucion.devolverLibro();
 
                     devoluciones.add(nuevaDevolucion);
 
@@ -353,9 +340,7 @@ public class Libreria {
 
                     break;
 
-                // =========================================
-                // MOSTRAR PRESTAMOS
-                // =========================================
+                // 7. MOSTRAR PRESTAMOS
                 case 7:
 
                     System.out.println();
@@ -380,17 +365,19 @@ public class Libreria {
                             );
 
                             System.out.println(
-                                    "Documento: "
-                                            + prestamo.getCliente().getId()
+                                    "ID cliente: "
+                                            + prestamo.getCliente()
+                                            .getId()
                             );
 
                             System.out.println(
                                     "Libro: "
-                                            + prestamo.getLibro().getTitulo()
+                                            + prestamo.getLibro()
+                                            .getTitulo()
                             );
 
                             System.out.println(
-                                    "ID del libro: "
+                                    "ID libro: "
                                             + prestamo.getLibro()
                                             .getIdentificador()
                             );
@@ -409,9 +396,7 @@ public class Libreria {
 
                     break;
 
-                // =========================================
-                // SALIR
-                // =========================================
+                // 8. SALIR
                 case 8:
 
                     System.out.println(

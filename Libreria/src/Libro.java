@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class Libro {
 
-    // Datos del libro
     private String identificador;
     private String titulo;
     private String autor;
@@ -11,10 +10,8 @@ public class Libro {
     private String categoria;
     private String estado;
 
-    // Lista donde se almacenan los libros
     private static ArrayList<Libro> libros = new ArrayList<>();
 
-    // Constructor
     public Libro(String identificador, String titulo, String autor,
                  String editorial, int anioPublicacion, String categoria) {
 
@@ -27,7 +24,6 @@ public class Libro {
         this.estado = "Disponible";
     }
 
-    // Getters
     public String getIdentificador() {
         return identificador;
     }
@@ -56,12 +52,10 @@ public class Libro {
         return estado;
     }
 
-    // Cambiar estado del libro
     public void cambiarEstado(String nuevoEstado) {
         estado = nuevoEstado;
     }
 
-    // Mostrar información de un libro
     public void mostrarInformacion() {
 
         System.out.println("ID: " + identificador);
@@ -74,13 +68,16 @@ public class Libro {
         System.out.println("-----------------------------");
     }
 
-    // Registrar un libro
     public static void registrarLibro(Libro libro) {
 
         for (Libro l : libros) {
 
             if (l.getIdentificador().equals(libro.getIdentificador())) {
-                System.out.println("Error: ya existe un libro con ese identificador.");
+
+                System.out.println(
+                        "Error: ya existe un libro con ese identificador."
+                );
+
                 return;
             }
         }
@@ -90,11 +87,12 @@ public class Libro {
         System.out.println("Libro registrado correctamente.");
     }
 
-    // Mostrar todos los libros
     public static void listarLibros() {
 
         if (libros.isEmpty()) {
+
             System.out.println("No hay libros registrados.");
+
             return;
         }
 
@@ -104,6 +102,7 @@ public class Libro {
             libro.mostrarInformacion();
         }
     }
+
     public static ArrayList<Libro> getLibros() {
         return libros;
     }
