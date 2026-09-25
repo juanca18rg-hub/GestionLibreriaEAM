@@ -1,11 +1,13 @@
 import java.time.LocalDateTime;
 
 public class Devolucion {
+
     private LocalDateTime fechaDevolucion;
-   private Cliente cliente;
-   private Libro libro;
+    private Cliente cliente;
+    private Libro libro;
 
     public Devolucion(Cliente cliente, Libro libro) {
+
         this.cliente = cliente;
         this.libro = libro;
     }
@@ -34,13 +36,27 @@ public class Devolucion {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-    public void Devolverlibro(){
-        if (libro.getEstado().equals("Prestado")){
-            libro.cambiarEstado("Disponible");
-            System.out.println("El libro"+libro.getTitulo()+"Esta disponible");
-            setFechaDevolucion(LocalDateTime.now());
-            cliente.setPrestamosActivos(cliente.getPrestamosActivos()-1);
-        }
+    public void devolverLibro() {
 
+        if (libro.getEstado().equalsIgnoreCase("Prestado")) {
+
+            libro.cambiarEstado("Disponible");
+
+            cliente.setTieneLibroPrestado(false);
+
+            setFechaDevolucion(LocalDateTime.now());
+
+            System.out.println(
+                    "El libro "
+                            + libro.getTitulo()
+                            + " ahora esta disponible."
+            );
+
+        } else {
+
+            System.out.println(
+                    "El libro ya esta disponible."
+            );
+        }
     }
 }
