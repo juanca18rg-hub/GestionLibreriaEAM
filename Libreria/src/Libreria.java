@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Libreria {
 
+
     public static void main(String[] args) {
 
         Scanner teclado = new Scanner(System.in);
@@ -10,6 +11,13 @@ public class Libreria {
         ArrayList<Cliente> clientes = new ArrayList<>();
         ArrayList<Prestamo> prestamos = new ArrayList<>();
         ArrayList<Devolucion> devoluciones = new ArrayList<>();
+
+        // CARGAR LOS DATOS GUARDADOS
+        Persistencia.cargarLibros();
+        Persistencia.cargarClientes(clientes);
+        Persistencia.cargarPrestamos(prestamos, clientes);
+
+        System.out.println("Datos cargados correctamente.");
 
         int opcion;
 
@@ -100,9 +108,13 @@ public class Libreria {
                             anio,
                             categoria
                     );
+                    int cantidadAntes = Libro.getLibros().size();
 
                     Libro.registrarLibro(nuevoLibro);
 
+                    if (Libro.getLibros().size() > cantidadAntes) {
+                        Persistencia.guardarLibros();
+                    }
                     break;
 
                 // 2. MOSTRAR LIBROS
@@ -158,13 +170,10 @@ public class Libreria {
                             telefonoCliente,
                             direccionCliente
                     );
-
                     clientes.add(nuevoCliente);
+                    Persistencia.guardarClientes(clientes);
 
-                    System.out.println(
-                            "Cliente registrado correctamente."
-                    );
-
+                    System.out.println( "Cliente registrado correctamente." );
                     break;
 
                 // 4. MOSTRAR CLIENTES
@@ -260,10 +269,12 @@ public class Libreria {
 
                     nuevoPrestamo.prestarlibro();
 
-                    // Solo guardamos el préstamo si realmente se hizo
+                    // Guardar solamente si el prestamo fue exitoso
                     if (libroDisponible && clienteLibre) {
 
                         prestamos.add(nuevoPrestamo);
+
+                        Persistencia.guardarTodo(clientes, prestamos);
                     }
 
                     break;
@@ -338,6 +349,9 @@ public class Libreria {
 
                     prestamos.remove(prestamoEncontrado);
 
+                    // Guardar los cambios de la devolucion
+                    Persistencia.guardarTodo(clientes, prestamos);
+
                     break;
 
                 // 7. MOSTRAR PRESTAMOS
@@ -398,6 +412,8 @@ public class Libreria {
 
                 // 8. SALIR
                 case 8:
+
+                    Persistencia.guardarTodo(clientes, prestamos);
 
                     System.out.println(
                             "Saliendo del sistema..."
