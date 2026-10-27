@@ -2,6 +2,7 @@ import java.time.LocalDateTime;
 
 public class Devolucion {
 
+    private LocalDateTime fechaPrestamo;
     private LocalDateTime fechaDevolucion;
     private Cliente cliente;
     private Libro libro;
@@ -26,6 +27,14 @@ public class Devolucion {
 
     public void setLibro(Libro libro) {
         this.libro = libro;
+    }
+
+    public LocalDateTime getFechaPrestamo() {
+        return fechaPrestamo;
+    }
+
+    public void setFechaPrestamo(LocalDateTime fechaPrestamo) {
+        this.fechaPrestamo = fechaPrestamo;
     }
 
     public LocalDateTime getFechaDevolucion() {
