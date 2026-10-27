@@ -9,6 +9,7 @@ public class Libro {
     private int anioPublicacion;
     private String categoria;
     private String estado;
+    private ArrayList<Reserva> reservas = new ArrayList<>();
 
     private static ArrayList<Libro> libros = new ArrayList<>();
 
@@ -56,6 +57,50 @@ public class Libro {
         estado = nuevoEstado;
     }
 
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+
+    public void agregarReserva(Reserva reserva) {
+        reservas.add(reserva);
+    }
+
+
+    public Reserva buscarReservaDeCliente(Cliente cliente) {
+
+        for (Reserva reserva : reservas) {
+
+            if (reserva.getCliente().getId().equals(cliente.getId())) {
+                return reserva;
+            }
+        }
+
+        return null;
+    }
+
+
+    public Reserva siguienteReserva() {
+
+        if (reservas.isEmpty()) {
+            return null;
+        }
+
+        return reservas.get(0);
+    }
+
+    public boolean quitarReservaDeCliente(Cliente cliente) {
+
+        Reserva reserva = buscarReservaDeCliente(cliente);
+
+        if (reserva == null) {
+            return false;
+        }
+
+        reservas.remove(reserva);
+        return true;
+    }
+
     public void mostrarInformacion() {
 
         System.out.println("ID: " + identificador);
@@ -101,6 +146,18 @@ public class Libro {
         for (Libro libro : libros) {
             libro.mostrarInformacion();
         }
+    }
+
+    public static Libro buscarPorId(String identificador) {
+
+        for (Libro libro : libros) {
+
+            if (libro.getIdentificador().equals(identificador)) {
+                return libro;
+            }
+        }
+
+        return null;
     }
 
     public static ArrayList<Libro> getLibros() {

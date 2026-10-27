@@ -5,6 +5,7 @@ public class Cliente {
 	private String telefono;
 	private String direccion;
 	private boolean tieneLibroPrestado;
+	private int multaPendiente;
 
 	public Cliente(String id, String nombre, String telefono, String direccion) {
 
@@ -13,6 +14,7 @@ public class Cliente {
 		this.telefono = telefono;
 		this.direccion = direccion;
 		this.tieneLibroPrestado = false;
+		this.multaPendiente = 0;
 	}
 
 	public String getId() {
@@ -39,6 +41,23 @@ public class Cliente {
 		this.tieneLibroPrestado = tieneLibroPrestado;
 	}
 
+	public int getMultaPendiente() {
+		return multaPendiente;
+	}
+
+	public void setMultaPendiente(int multaPendiente) {
+		this.multaPendiente = multaPendiente;
+	}
+
+	public void agregarMulta(int valor) {
+		multaPendiente = multaPendiente + valor;
+	}
+
+
+	public void pagarMultas() {
+		multaPendiente = 0;
+	}
+
 	public void mostrarInformacion() {
 
 		System.out.println("ID: " + id);
@@ -51,5 +70,7 @@ public class Cliente {
 		} else {
 			System.out.println("Tiene libro prestado: No");
 		}
+
+		System.out.println("Multa pendiente: $" + multaPendiente + " COP");
 	}
 }

@@ -1,0 +1,8 @@
+.git
+.idea
+**/.idea
+*.iml
+**/*.iml
+datos
+out
+*.class
